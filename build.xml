@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hello-ant" default="jar" basedir=".">
+
+    <!-- ~ Maven <version> -->
+    <property name="version" value="1.0.0"/>
+    <!-- ~ Maven <mainClass> in maven-jar-plugin manifest config -->
+    <property name="main.class" value="com.example.Main"/>
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="jar.file" value="${dist.dir}/${ant.project.name}-${version}.jar"/>
+
+    <!-- ~ mvn clean -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <!-- ~ mvn compile -->
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false"
+               release="17" debug="true"/>
+    </target>
+
+    <!-- ~ mvn package -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${jar.file}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- ~ mvn exec:java -->
+    <target name="run" depends="jar">
+        <java jar="${jar.file}" fork="true"/>
+    </target>
+
+</project>

@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+    <info organisation="com.example" module="hello-ant" revision="${version}"/>
+    <publications>
+        <artifact name="hello-ant" type="jar"/>
+    </publications>
+</ivy-module>
